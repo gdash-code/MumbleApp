@@ -1,5 +1,6 @@
 package com.goddmnash.MumbleApp.controllers;
 
+import com.goddmnash.MumbleApp.kafka.AudioProducer;
 import com.goddmnash.MumbleApp.models.AudioTranscription;
 import com.goddmnash.MumbleApp.services.AudioTranscriptionService;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,11 @@ import java.util.UUID;
 public class AudioTranscriptionController {
 
     private final AudioTranscriptionService service;
+    private final AudioProducer producer;
 
-    public AudioTranscriptionController(AudioTranscriptionService service) {
+    public AudioTranscriptionController(AudioTranscriptionService service, AudioProducer producer) {
         this.service = service;
+        this.producer = producer;
     }
 
     @GetMapping("/{userId}")
@@ -24,8 +27,9 @@ public class AudioTranscriptionController {
     }
 
     @PostMapping
-    public ResponseEntity<AudioTranscription> saveTranscription(@RequestBody AudioTranscription transcription) {
-        return ResponseEntity.ok(service.saveTranscription(transcription));
+    public ResponseEntity<String> saveTranscription(@RequestBody AudioTranscription transcription) {
+        producer.sendMessage(transcription.getTranscription());
+        return ResponseEntity.ok("Transcription sent to Kafka: " + transcription.getTranscription());
     }
 }
 
