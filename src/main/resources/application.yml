@@ -3,13 +3,17 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/yourdb
-    username: youruser
-    password: yourpassword
+    url: jdbc:postgresql://localhost:5433/mumbledb
+    username: postgres
+    password: mumble
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: update # Creates tables automatically (use 'validate' in production)
+    show-sql: true #Logs SQL queries in console
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 kafka:
   bootstrap-servers: localhost:9092
