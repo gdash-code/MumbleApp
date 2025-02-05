@@ -1,7 +1,9 @@
 services:
   backend:
-    build: ./src
-    container_name: mumbleApp
+    build:
+      context: ./src
+      dockerfile: ../Dockerfile
+    container_name: my-app
     depends_on:
       - db
     environment:
