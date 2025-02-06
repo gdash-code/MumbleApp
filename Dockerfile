@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Copy all project files into the container
 COPY . .
-
+RUN ls -l
 # Make sure the Maven wrapper is executable
 RUN chmod +x ./mvnw
 
