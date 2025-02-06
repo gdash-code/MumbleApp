@@ -1,8 +1,8 @@
 services:
   app:
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ./
+      dockerfile: Dockerfile
     container_name: my-app
     depends_on:
       - db
