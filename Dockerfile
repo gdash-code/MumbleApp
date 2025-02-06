@@ -7,7 +7,6 @@ COPY . .
 RUN ls -l
 # Make sure the Maven wrapper is executable
 RUN chmod +x ./mvnw
-
 # Build the application using the Maven wrapper
 RUN ./mvnw clean package -DskipTests
 
