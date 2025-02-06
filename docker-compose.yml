@@ -1,5 +1,5 @@
 services:
-  backend:
+  app:
     build:
       context: ./src
       dockerfile: ../Dockerfile
@@ -9,7 +9,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=mumble
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/mumbledb
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5433/mumbledb
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     ports:
       - "8080:8080"
@@ -22,7 +22,7 @@ services:
       - POSTGRES_PASSWORD=mumble
       - POSTGRES_DB=mumbledb
     ports:
-      - "5432:5432"
+      - "5433:5433"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -34,9 +34,9 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
 
-  kafka0:
+  kafka:
     image: confluentinc/cp-kafka:latest
-    container_name: kafka0
+    container_name: kafka
     ports:
       - "9092:9092"
     environment:
@@ -47,17 +47,17 @@ services:
     depends_on:
       - zookeeper
 
-  kafka-ui:
-    container_name: kafka-ui
-    image: provectuslabs/kafka-ui:latest
-    ports:
-      - "8081:8080"
-    depends_on:
-      - kafka0
-    environment:
-      - DYNAMIC_CONFIG_ENABLED=true
-      - KAFKA_CLUSTERS_0_NAME=LocalKafka
-      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka0:9092
+#  kafka-ui:
+#    container_name: kafka-ui
+#    image: provectuslabs/kafka-ui:latest
+#    ports:
+#      - "8081:8080"
+#    depends_on:
+#      - kafka0
+#    environment:
+#      - DYNAMIC_CONFIG_ENABLED=true
+#      - KAFKA_CLUSTERS_0_NAME=LocalKafka
+#      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka0:9092
 
 volumes:
   postgres_data:
