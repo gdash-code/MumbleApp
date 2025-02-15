@@ -3,7 +3,7 @@ FROM eclipse-temurin:21 AS builder
 WORKDIR /app
 
 # Copy all project files into the container
-COPY . /app
+COPY .. /app
 
 # Make sure the Maven wrapper is executable
 RUN chmod +x /app/mvnw
